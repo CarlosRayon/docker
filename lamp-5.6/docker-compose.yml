@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  webserver:
+    build: 
+      context: ./bin/webserver
+    container_name: 'php-5.6-lamp-5.6'
+    restart: 'always'
+    ports:
+      - "9095:80"
+      - "443:443"
+    links: 
+      - mysql
+    volumes: 
+      - ${DOCUMENT_ROOT}:/var/www/html
+      - ${PHP_INI}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR}:/etc/apache2/sites-enabled
+      - ${LOG_DIR}:/var/log/apache2
+  mysql:
+    build: ./bin/mysql
+    container_name: 'mysql-5.7-lamp-5.6'
+    restart: 'always'
+    ports:
+      - "9097:3306"
+    volumes: 
+      - ${MYSQL_DATA_DIR-./data/mysql}:/var/lib/mysql
+      - ${MYSQL_LOG_DIR-./logs/mysql}:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 'phpmyadmin-lamp-5.6'
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - '9096:80'
+    volumes: 
+      - /sessions
