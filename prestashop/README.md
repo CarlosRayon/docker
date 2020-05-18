@@ -21,6 +21,8 @@ Cuando empiece instalación, debemos poner la ip del contenedor de la base datos
 Pass, user y DB seran (las que definamos en .env para la mysql):
 `prestashop`
 
+Una vez instalado debemos borrar la capeta *www/install* si no no podremos acceder administrador.
+
 # Instalacion (en este caso no tiene. Se debe instalar desde 0)
 
 Ya tiene instalado un prestashop por defecto. Si queremos usar este hacemos lo siguiente. Si lo queremos instalar desde
